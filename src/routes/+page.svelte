@@ -152,7 +152,7 @@
 
 <div class="content-area">
     <div class="camera">
-        <video id="video">Video stream not available.
+        <video id="video" playsinline autoplay>Video stream not available.
             <track kind="captions">
         </video>
         <button id="start-button">Take photo</button>
