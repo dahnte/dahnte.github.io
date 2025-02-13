@@ -1,102 +1,32 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    
-    let lat: string, long: string, acc: string, height: number;
-    const width:number = 320;
+    let lat: string, long: string, acc: string;
     let streaming:boolean = false;
-    let startButton = null;
-    let facingModeState:string = "user";
+    let isFacingModeUser:boolean = true;
     
-    const options = {
+    const geoOptions = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0,
     };
     
-    function success(pos) {
+    function geoSuccess(pos) {
         lat = pos.coords.latitude;
         long = pos.coords.longitude;
         acc = pos.coords.accuracy;
     }
     
-    function error(err) {
+    function geoError(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }
     
     function findLoc() {
-        navigator.geolocation.getCurrentPosition(success, error, options);
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
         document.getElementById('geo-detail')!.hidden = false;
-    }
-    
-    function showViewLiveResultButton() {
-        if (window.self !== window.top) {
-            // Ensure that if our document is in a frame, we get the user
-            // to first open it in its own tab or window. Otherwise, it
-            // won't be able to request permission for camera access.
-            document.querySelector(".content-area")!.remove();
-            const button = document.createElement("button");
-            button.textContent = "View live result of the example code above";
-            document.body.append(button);
-            button.addEventListener("click", () => window.open(location.href));
-            return true;
-        }
-        return false;
-    }
-    
-    function startup() {
-        if (showViewLiveResultButton()) {
-            return;
-        }
-        startButton = document.getElementById("start-button");
-        
-        navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false })
-        .then((stream) => {
-            video.srcObject = stream;
-            video.play();
-        })
-        .catch((err) => {
-            console.error(`An error occurred: ${err}`);
-        });
-        
-        video.addEventListener(
-        "canplay",
-        (ev) => {
-            if (!streaming) {
-                height = video.videoHeight / (video.videoWidth / width);
-                
-                // Firefox currently has a bug where the height can't be read from
-                // the video, so we will make assumptions if this happens.
-                
-                if (isNaN(height)) {
-                    height = width / (4 / 3);
-                }
-                
-                video.setAttribute("width", width);
-                video.setAttribute("height", height);
-                canvas.setAttribute("width", width);
-                canvas.setAttribute("height", height);
-                streaming = true;
-            }
-        },
-        false,
-        );
-        
-        startButton.addEventListener(
-        "click",
-        (ev) => {
-            takePicture();
-            ev.preventDefault();
-        },
-        false,
-        );
-        
-        clearPhoto();
     }
     
     // Fill the photo with an indication that none has been
     // captured.
-    
     function clearPhoto() {
         const context = canvas.getContext("2d");
         context.fillStyle = "#AAA";
@@ -111,13 +41,10 @@
     // format data URL. By drawing it on an offscreen canvas and then
     // drawing that to the screen, we can change its size and/or apply
     // other changes before drawing it.
-    
     function takePicture() {
         const context = canvas.getContext("2d");
-        if (width && height) {
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(video, 0, 0, width, height);
+        if (canvas.width && canvas.height) {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
             context.font = "bold 15pt Calibri";
             context.fillStyle = "white";
             context.fillText(`${lat} | ${long} | ${acc}`, 20, 20);
@@ -131,49 +58,64 @@
     
     function handleSuccess(stream) {
         const videoTracks = stream.getVideoTracks();
-        console.log('Got stream with constraints:', constraints);
+
+        console.log("Got stream with constraints:", constraints);
         console.log(`Using video device: ${videoTracks[0].label}`);
         window.stream = stream; // make variable available to browser console
         video.srcObject = stream;
-        height = video.videoHeight / (video.videoWidth / width);
+        // canvas.height = video.videoHeight / (video.videoWidth / canvas.width);
         
         // Firefox currently has a bug where the height can't be read from
         // the video, so we will make assumptions if this happens.
         
-        if (isNaN(height)) {
-            height = width / (4 / 3);
+        if (isNaN(canvas.height)) {
+            canvas.height = canvas.width / (4 / 3);
         }
         
-        video.setAttribute("width", width);
-        video.setAttribute("height", height);
-        canvas.setAttribute("width", width);
-        canvas.setAttribute("height", height);
+        video.setAttribute("width", canvas.width);
+        video.setAttribute("height", canvas.height);
         streaming = true;
     }
     
     function handleError(error) {
-        if (error.name === 'OverconstrainedError') {
+        if (error.name === "OverconstrainedError") {
             errorMsg(`OverconstrainedError: The constraints could not be satisfied by the available devices. Constraints: ${JSON.stringify(constraints)}`);
-        } else if (error.name === 'NotAllowedError') {
-            errorMsg('NotAllowedError: Permissions have not been granted to use your camera and ' +
-            'microphone, you need to allow the page access to your devices in ' +
-            'order for the demo to work.');
+        } else if (error.name === "NotAllowedError") {
+            errorMsg("NotAllowedError: Permissions have not been granted to use your camera and microphone, you need to allow the page access to your devices in order for the demo to work.");
         }
         errorMsg(`getUserMedia error: ${error.name}`, error);
     }
     
     function errorMsg(msg, error) {
-        const errorElement = document.querySelector('#errorMsg')!;
+        const errorElement = document.querySelector("#errorMsg")!;
         errorElement.innerHTML += `<p>${msg}</p>`;
-        if (typeof error !== 'undefined') {
+        if (typeof error !== "undefined") {
             console.error(error);
         }
     }
     
-    function flipCamera() {
-      facingModeState = facingModeState === 'user' ? 'environment' : 'user';
-    }
+    function flipCamera(e) {
+        const tracks = video.srcObject.getVideoTracks();
+        
+        tracks.forEach((track) => {
+            track.stop();
+        });
+        
+        video.srcObject = null;
+        window.stream = null;
 
+        isFacingModeUser = !isFacingModeUser;
+        constraints = window.constraints = {
+            audio: false,
+            video: {
+                facingMode: isFacingModeUser ? "user" : "environment"
+            }
+        };
+        init(e);
+        //     .then(init(e))
+        //     .catch(handleError(e));
+    }
+    
     async function init(e) {
         try {
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -185,18 +127,19 @@
     }
     
     onMount(() => {
-        let video = document.getElementById("video")!;
-        let canvas = document.getElementById("canvas")!;
-        let photo = document.getElementById("photo")!;
-        
         let constraints = window.constraints = {
             audio: false,
             video: {
-                facingMode: facingModeState
+                facingMode: isFacingModeUser ? "user" : "environment"
             }
         };
-        navigator.geolocation.getCurrentPosition(success, error, options);
-        // window.addEventListener("load", startup, false);
+        let video = window.video = document.getElementById("video")!;
+        let canvas = window.canvas = document.getElementById("canvas")!;
+        canvas.width = 480;
+        canvas.height = 360;
+        let photo = document.getElementById("photo")!;
+        
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
     })
 </script>
 
@@ -219,7 +162,7 @@
         </div>
         <button id="button" onclick={e=>init(e)}>Start video</button>
         <button id="button" onclick={takePicture}>Take photo</button>
-        <button id="button" onclick={flipCamera}>Flip camera</button>
+        <button id="button" onclick={e=>flipCamera(e)}>Flip camera</button>
         <canvas id="canvas"></canvas>
         <div class="output">
             <img id="photo" alt="The screen capture will appear in this box." />
@@ -270,7 +213,7 @@
             color: rgb(255 255 255 / 100%);
             cursor: pointer;
         }
-
+        
         #button:hover {
             background-color: orange;
         }
