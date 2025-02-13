@@ -27,10 +27,13 @@
     
     // Fill the photo with an indication that none has been
     // captured.
-    function clearPhoto() {
+    function clearPhoto(vertical: boolean) {
         const context = canvas.getContext("2d");
         context.fillStyle = "#AAA";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        if (vertical)
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        else
+            context.fillRect(0, 0, canvas.width, canvas.height);
         
         const data = canvas.toDataURL("image/png");
         photo.setAttribute("src", data);
@@ -41,10 +44,13 @@
     // format data URL. By drawing it on an offscreen canvas and then
     // drawing that to the screen, we can change its size and/or apply
     // other changes before drawing it.
-    function takePicture() {
+    function takePicture(vertical: boolean) {
         const context = canvas.getContext("2d");
         if (canvas.width && canvas.height) {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            if (!vertical)
+                context.drawImage(video, 0, 0, canvas.height, canvas.width);
+            else
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
             context.font = "bold 15pt Calibri";
             context.fillStyle = "white";
             context.fillText(`${lat} | ${long} | ${acc}`, 20, 20);
@@ -52,7 +58,7 @@
             const data = canvas.toDataURL("image/png");
             photo.setAttribute("src", data);
         } else {
-            clearPhoto();
+            clearPhoto(vertical);
         }
     }
     
@@ -72,8 +78,8 @@
             canvas.height = canvas.width / (4 / 3);
         }
         
-        video.setAttribute("width", canvas.height);
-        video.setAttribute("height", canvas.width);
+        video.setAttribute("width", canvas.width);
+        video.setAttribute("height", canvas.height);
         streaming = true;
     }
     
@@ -146,7 +152,7 @@
     })
 </script>
 
-<button onclick={findLoc}>Debug geo details</button>
+<button class="geoBtn" onclick={findLoc}>Debug geo details</button>
 
 <div id="geo-detail" hidden>
     <h1>Your position is: </h1>
@@ -163,11 +169,12 @@
             <track kind="captions">
             </video>
         </div>
-        <button id="button" onclick={e=>init(e)}>Start video</button>
-        <button id="button" onclick={takePicture}>Take photo</button>
-        <button id="button" onclick={flipCamera}>Flip camera</button>
-        <canvas id="canvas"></canvas>
+        <button class="cameraBtn" onclick={e=>init(e)}>Start video</button>
+        <button class="cameraBtn" onclick={() => takePicture(false)}>Take horizontal photo</button>
+        <button class="cameraBtn" onclick={() => takePicture(true)}>Take vertical photo</button>
+        <button class="cameraBtn" onclick={flipCamera}>Flip camera</button>
         <div class="output">
+            <canvas id="canvas"></canvas>
             <img id="photo" alt="The screen capture will appear in this box." />
         </div>
     </div>
@@ -198,7 +205,7 @@
             vertical-align: top;
         }
         
-        #button {
+        .cameraBtn {
             display: block;
             position: relative;
             margin-left: auto;
@@ -213,7 +220,7 @@
             cursor: pointer;
         }
         
-        #button:hover {
+        .cameraBtn:hover, .geoBtn:hover {
             background-color: orange;
         }
         
