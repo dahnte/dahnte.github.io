@@ -4,11 +4,8 @@
     let lat: string, long: string, acc: string, height: number;
     const width:number = 320;
     let streaming:boolean = false;
-    
-    let video = null;
-    let canvas = null;
-    let photo = null;
     let startButton = null;
+    let facingModeState:string = "user";
     
     const options = {
         enableHighAccuracy: true,
@@ -28,7 +25,7 @@
     
     function findLoc() {
         navigator.geolocation.getCurrentPosition(success, error, options);
-        document.getElementById('geo-detail').hidden = false;
+        document.getElementById('geo-detail')!.hidden = false;
     }
     
     function showViewLiveResultButton() {
@@ -36,7 +33,7 @@
             // Ensure that if our document is in a frame, we get the user
             // to first open it in its own tab or window. Otherwise, it
             // won't be able to request permission for camera access.
-            document.querySelector(".content-area").remove();
+            document.querySelector(".content-area")!.remove();
             const button = document.createElement("button");
             button.textContent = "View live result of the example code above";
             document.body.append(button);
@@ -50,9 +47,6 @@
         if (showViewLiveResultButton()) {
             return;
         }
-        video = document.getElementById("video");
-        canvas = document.getElementById("canvas");
-        photo = document.getElementById("photo");
         startButton = document.getElementById("start-button");
         
         navigator.mediaDevices
@@ -135,9 +129,74 @@
         }
     }
     
+    function handleSuccess(stream) {
+        const videoTracks = stream.getVideoTracks();
+        console.log('Got stream with constraints:', constraints);
+        console.log(`Using video device: ${videoTracks[0].label}`);
+        window.stream = stream; // make variable available to browser console
+        video.srcObject = stream;
+        height = video.videoHeight / (video.videoWidth / width);
+        
+        // Firefox currently has a bug where the height can't be read from
+        // the video, so we will make assumptions if this happens.
+        
+        if (isNaN(height)) {
+            height = width / (4 / 3);
+        }
+        
+        video.setAttribute("width", width);
+        video.setAttribute("height", height);
+        canvas.setAttribute("width", width);
+        canvas.setAttribute("height", height);
+        streaming = true;
+    }
+    
+    function handleError(error) {
+        if (error.name === 'OverconstrainedError') {
+            errorMsg(`OverconstrainedError: The constraints could not be satisfied by the available devices. Constraints: ${JSON.stringify(constraints)}`);
+        } else if (error.name === 'NotAllowedError') {
+            errorMsg('NotAllowedError: Permissions have not been granted to use your camera and ' +
+            'microphone, you need to allow the page access to your devices in ' +
+            'order for the demo to work.');
+        }
+        errorMsg(`getUserMedia error: ${error.name}`, error);
+    }
+    
+    function errorMsg(msg, error) {
+        const errorElement = document.querySelector('#errorMsg')!;
+        errorElement.innerHTML += `<p>${msg}</p>`;
+        if (typeof error !== 'undefined') {
+            console.error(error);
+        }
+    }
+    
+    function flipCamera() {
+      facingModeState = facingModeState === 'user' ? 'environment' : 'user';
+    }
+
+    async function init(e) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            handleSuccess(stream);
+            e.target.disabled = true;
+        } catch (e) {
+            handleError(e);
+        }
+    }
+    
     onMount(() => {
+        let video = document.getElementById("video")!;
+        let canvas = document.getElementById("canvas")!;
+        let photo = document.getElementById("photo")!;
+        
+        let constraints = window.constraints = {
+            audio: false,
+            video: {
+                facingMode: facingModeState
+            }
+        };
         navigator.geolocation.getCurrentPosition(success, error, options);
-        window.addEventListener("load", startup, false);
+        // window.addEventListener("load", startup, false);
     })
 </script>
 
@@ -151,65 +210,74 @@
 </div>
 
 <div class="content-area">
+    <div id="errorMsg"></div>
     <div class="camera">
-        <video id="video" playsinline autoplay>Video stream not available.
+        <video id="video" playsinline autoplay>
+            Video stream not available.
             <track kind="captions">
-        </video>
-        <button id="start-button">Take photo</button>
+            </video>
+        </div>
+        <button id="button" onclick={e=>init(e)}>Start video</button>
+        <button id="button" onclick={takePicture}>Take photo</button>
+        <button id="button" onclick={flipCamera}>Flip camera</button>
+        <canvas id="canvas"></canvas>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box." />
+        </div>
     </div>
-    <canvas id="canvas"> </canvas>
-    <div class="output">
-        <img id="photo" alt="The screen capture will appear in this box." />
-    </div>
-</div>
+    
+    <style>
+        #video {
+            border: 1px solid black;
+            box-shadow: 2px 2px 3px black;
+            width: 320px;
+            height: 240px;
+        }
+        
+        #photo {
+            border: 1px solid black;
+            box-shadow: 2px 2px 3px black;
+            width: 320px;
+            height: 240px;
+        }
+        
+        #canvas {
+            display: none;
+        }
+        
+        .camera {
+            width: 340px;
+            display: inline-block;
+        }
+        
+        .output {
+            width: 340px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        #button {
+            display: block;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            bottom: 32px;
+            background-color: rgb(0 150 0 / 50%);
+            border: 1px solid rgb(255 255 255 / 70%);
+            box-shadow: 0px 0px 1px 2px rgb(0 0 0 / 20%);
+            font-size: 14px;
+            font-family: "Lucida Grande", "Arial", sans-serif;
+            color: rgb(255 255 255 / 100%);
+            cursor: pointer;
+        }
 
-<style>
-    #video {
-        border: 1px solid black;
-        box-shadow: 2px 2px 3px black;
-        width: 320px;
-        height: 240px;
-    }
-    
-    #photo {
-        border: 1px solid black;
-        box-shadow: 2px 2px 3px black;
-        width: 320px;
-        height: 240px;
-    }
-    
-    #canvas {
-        display: none;
-    }
-    
-    .camera {
-        width: 340px;
-        display: inline-block;
-    }
-    
-    .output {
-        width: 340px;
-        display: inline-block;
-        vertical-align: top;
-    }
-    
-    #start-button {
-        display: block;
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-        bottom: 32px;
-        background-color: rgb(0 150 0 / 50%);
-        border: 1px solid rgb(255 255 255 / 70%);
-        box-shadow: 0px 0px 1px 2px rgb(0 0 0 / 20%);
-        font-size: 14px;
-        font-family: "Lucida Grande", "Arial", sans-serif;
-        color: rgb(255 255 255 / 100%);
-    }
-    
-    .content-area {
-        font-size: 16px;
-        font-family: "Lucida Grande", "Arial", sans-serif;
-        width: 760px;
-    }
-</style>
+        #button:hover {
+            background-color: orange;
+        }
+        
+        .content-area {
+            font-size: 16px;
+            font-family: "Lucida Grande", "Arial", sans-serif;
+            width: 760px;
+        }
+    </style>
