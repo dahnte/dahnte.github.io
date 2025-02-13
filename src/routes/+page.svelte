@@ -72,8 +72,8 @@
             canvas.height = canvas.width / (4 / 3);
         }
         
-        video.setAttribute("width", canvas.width);
-        video.setAttribute("height", canvas.height);
+        video.setAttribute("width", canvas.height);
+        video.setAttribute("height", canvas.width);
         streaming = true;
     }
     
@@ -94,8 +94,8 @@
         }
     }
     
-    function flipCamera(e) {
-        const tracks = video.srcObject.getVideoTracks();
+    function flipCamera() {
+        const tracks = video.srcObject.getTracks();
         
         tracks.forEach((track) => {
             track.stop();
@@ -111,16 +111,19 @@
                 facingMode: isFacingModeUser ? "user" : "environment"
             }
         };
-        init(e);
+        init();
         //     .then(init(e))
         //     .catch(handleError(e));
     }
     
-    async function init(e) {
+    async function init(e?: MouseEvent) {
         try {
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             handleSuccess(stream);
-            e.target.disabled = true;
+            if(e) {
+                e.target.disabled = true;
+                e.target.style.visibility = "hidden";
+            }
         } catch (e) {
             handleError(e);
         }
@@ -162,7 +165,7 @@
         </div>
         <button id="button" onclick={e=>init(e)}>Start video</button>
         <button id="button" onclick={takePicture}>Take photo</button>
-        <button id="button" onclick={e=>flipCamera(e)}>Flip camera</button>
+        <button id="button" onclick={flipCamera}>Flip camera</button>
         <canvas id="canvas"></canvas>
         <div class="output">
             <img id="photo" alt="The screen capture will appear in this box." />
@@ -173,15 +176,11 @@
         #video {
             border: 1px solid black;
             box-shadow: 2px 2px 3px black;
-            width: 320px;
-            height: 240px;
         }
         
         #photo {
             border: 1px solid black;
             box-shadow: 2px 2px 3px black;
-            width: 320px;
-            height: 240px;
         }
         
         #canvas {
