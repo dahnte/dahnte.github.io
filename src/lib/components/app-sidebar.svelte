@@ -12,7 +12,7 @@
 	import CalendarDays from "lucide-svelte/icons/calendar-days";
 	import ListTodo from  "lucide-svelte/icons/list-todo";
 	import { base } from '$app/paths';
-
+	
 	// This is sample data.
 	const data = {
 		user: {
@@ -21,65 +21,75 @@
 			avatar: "",
 		},
 		teams: [
-			{
-				name: "Evenworks",
-				logo: Command,
-				plan: "Free",
-			},
+		{
+			name: "Evenworks",
+			logo: Command,
+			plan: "Free",
+		},
 		],
-// Dashboard at a glance 
-// AI Suggestions (hard-coded)
-// Website basics (about us, team, CTA) 
 		navMain: [
+		{
+			title: "Calendar",
+			url: base + "/dashboard/calendar",
+			icon: CalendarDays,
+			// items: [
+			// 	{
+			// 		title: "Duo View",
+			// 		url: base + "/dashboard/duo",
+			// 	},
+			// 	{
+			// 		title: "Build Your Own Schedule",
+			// 		url: base + "/dashboard/byos",
+			// 	},
+			// ],
+		},
+		{
+			title: "Tasklist",
+			url: base + "/dashboard/tasklist",
+			icon: ListTodo,
+		},
+		{
+			title: "Build Your Own Schedule",
+			url: base + "/dashboard/tasklist",
+			icon: ListTodo,
+		},
+		{
+			title: "Settings",
+			url: base + "/dashboard",
+			icon: Settings2,
+			items: [
 			{
-				title: "Calendar",
-				url: base + "/dashboard",
-				icon: CalendarDays,
-				items: [
-					{
-						title: "Duo View",
-						url: base + "/dashboard/duo",
-					},
-					{
-						title: "Build Your Own Schedule",
-						url: base + "/dashboard/byos",
-					},
-				],
-			},
-			{
-				title: "Tasklist",
-				url: base + "/dashboard/tasklist",
-				icon: ListTodo,
-			},
-			{
-				title: "Settings",
-				url: base + "/dashboard",
-				icon: Settings2,
-				items: [
-					{
-						title: "General",
-						url: "#",
-					},
-					{
-						title: "Team",
-						url: "#",
-					},
-					{
-						title: "Billing",
-						url: "#",
-					},
-					{
-						title: "Limits",
-						url: "#",
-					},
-				],
-			},
-		],
-		projects: [
-			{
-				name: "Design Engineering",
+				title: "General",
 				url: "#",
-				icon: Frame,
+			},
+			{
+				title: "Team",
+				url: "#",
+			},
+			{
+				title: "Billing",
+				url: "#",
+			},
+			{
+				title: "Limits",
+				url: "#",
+			},
+			{
+				title: "Toggle theme",
+				url: "#",
+				toggleSwitch: true,
+			},
+			],
+		},
+		],
+		navNotif: [
+			{
+				url: base + "/dashboard/calendar",
+				item: "Your meeting has been rescheduled for Monday at 8:30 AM",
+			},
+			{
+				url: base + "/dashboard/tasklist",
+				item: "You have pending tasks that need to be reviewed",
 			},
 		],
 	};
@@ -87,29 +97,32 @@
 
 <script lang="ts">
 	import NavMain from "$lib/components/nav-main.svelte";
-	import NavProjects from "$lib/components/nav-projects.svelte";
+	import NavPrompt from "$lib/components/nav-prompt.svelte";
 	import NavUser from "$lib/components/nav-user.svelte";
+	import NavNotif from "$lib/components/nav-notif.svelte";
 	import TeamSwitcher from "$lib/components/team-switcher.svelte";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import type { ComponentProps } from "svelte";
-
+	
 	let {
 		ref = $bindable(null),
 		collapsible = "icon",
 		...restProps
 	}: ComponentProps<typeof Sidebar.Root> = $props();
-</script>
-
-<Sidebar.Root bind:ref {collapsible} {...restProps}>
-	<Sidebar.Header>
-		<TeamSwitcher teams={data.teams} />
-	</Sidebar.Header>
-	<Sidebar.Content>
-		<NavMain items={data.navMain} />
-		<!-- <NavProjects projects={data.projects} /> -->
-	</Sidebar.Content>
-	<Sidebar.Footer>
-		<NavUser user={data.user} />
-	</Sidebar.Footer>
-	<Sidebar.Rail />
-</Sidebar.Root>
+	</script>
+	
+	<Sidebar.Root bind:ref {collapsible} {...restProps}>
+		<Sidebar.Header>
+			<TeamSwitcher teams={data.teams} />
+		</Sidebar.Header>
+		<Sidebar.Content>
+			<NavNotif items={data.navNotif} />
+			<NavPrompt />
+			<NavMain items={data.navMain} />
+		</Sidebar.Content>
+		<Sidebar.Footer>
+			<NavUser user={data.user} />
+		</Sidebar.Footer>
+		<Sidebar.Rail />
+	</Sidebar.Root>
+	

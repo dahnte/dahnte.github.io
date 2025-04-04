@@ -2,6 +2,8 @@
 	import * as Collapsible from "$lib/components/ui/collapsible/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import ChevronRight from "lucide-svelte/icons/chevron-right";
+    import { toggleMode } from "mode-watcher";
+	// import { Badge } from "$lib/components/ui/badge/index.js";
 
 	let {
 		items,
@@ -16,7 +18,8 @@
 			items?: {
 				title: string;
 				url: string;
-			}[];
+				toggleSwitch?: boolean;
+			}[]
 		}[];
 	} = $props();
 </script>
@@ -65,9 +68,15 @@
 										<Sidebar.MenuSubItem>
 											<Sidebar.MenuSubButton>
 												{#snippet child({ props })}
+													{#if subItem.toggleSwitch}
+													<a href={subItem.url} onclick={toggleMode} {...props}>
+														<span>{subItem.title}</span>
+													</a>
+													{:else}
 													<a href={subItem.url} {...props}>
 														<span>{subItem.title}</span>
 													</a>
+													{/if}
 												{/snippet}
 											</Sidebar.MenuSubButton>
 										</Sidebar.MenuSubItem>
