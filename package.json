@@ -19,16 +19,19 @@
 		"@event-calendar/core": "^3.10.0",
 		"@event-calendar/time-grid": "^3.10.0",
 		"@internationalized/date": "^3.7.0",
+		"@lucide/svelte": "^0.510.0",
 		"@melt-ui/pp": "^0.3.2",
 		"@melt-ui/svelte": "^0.86.3",
 		"@sveltejs/adapter-node": "^5.2.12",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.17.3",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"@types/event-calendar__interaction": "^3.4.1",
 		"@types/event-calendar__time-grid": "^3.4.1",
 		"autoprefixer": "^10.4.20",
 		"bits-ui": "1.3.5",
 		"clsx": "^2.1.1",
+		"embla-carousel-svelte": "^8.6.0",
 		"eslint": "^9.21.0",
 		"eslint-config-prettier": "^10.0.2",
 		"eslint-plugin-svelte": "^2.46.1",
@@ -49,6 +52,7 @@
 		"vite": "^6.2.0"
 	},
 	"dependencies": {
+		"@event-calendar/interaction": "^3.12.0",
 		"@thisux/sveltednd": "^0.0.20",
 		"@types/event-calendar__core": "^3.7.0",
 		"mode-watcher": "^0.5.1"

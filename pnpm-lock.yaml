@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@event-calendar/interaction':
+        specifier: ^3.12.0
+        version: 3.12.0
       '@thisux/sveltednd':
         specifier: ^0.0.20
         version: 0.0.20(svelte@5.21.0)
@@ -33,6 +36,9 @@ importers:
       '@internationalized/date':
         specifier: ^3.7.0
         version: 3.7.0
+      '@lucide/svelte':
+        specifier: ^0.510.0
+        version: 0.510.0(svelte@5.21.0)
       '@melt-ui/pp':
         specifier: ^0.3.2
         version: 0.3.2(@melt-ui/svelte@0.86.3(svelte@5.21.0))(svelte@5.21.0)
@@ -51,6 +57,9 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^5.0.3
         version: 5.0.3(svelte@5.21.0)(vite@6.2.0(jiti@1.21.7)(yaml@2.7.0))
+      '@types/event-calendar__interaction':
+        specifier: ^3.4.1
+        version: 3.4.1
       '@types/event-calendar__time-grid':
         specifier: ^3.4.1
         version: 3.4.1
@@ -63,6 +72,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      embla-carousel-svelte:
+        specifier: ^8.6.0
+        version: 8.6.0(svelte@5.21.0)
       eslint:
         specifier: ^9.21.0
         version: 9.21.0(jiti@1.21.7)
@@ -324,6 +336,12 @@ packages:
   '@event-calendar/core@3.10.0':
     resolution: {integrity: sha512-E6zLW/uUg+OxLFYWS4YOY17SaS1QZ/t1VP+TjLwNSufW+Pbx554kSyPPA+CBrENHbWlQrrPAt+VnngjIDQtk+Q==}
 
+  '@event-calendar/core@3.12.0':
+    resolution: {integrity: sha512-aKtDwEKzWHOV2PLVdhR/f843ecW3C0w5G5VhGl1f0GBEgT8dZvoYreQ7QKTBWh7B7YEtEn2P0Dn36zFYj5XEXQ==}
+
+  '@event-calendar/interaction@3.12.0':
+    resolution: {integrity: sha512-+d3KqxNdcY/RfJrdai37XCoTx7KKpzqJIo/WAjH1p8ZiypsfrHgpWWuTtF76u3hpn/1qqWUM3VFJSTKbjJkWTg==}
+
   '@event-calendar/time-grid@3.10.0':
     resolution: {integrity: sha512-WC6UNCoA456axxSUG3W7lLRkDyqckc0dxXDbgym21y9XLsclZj15ln9fnMjHuVSHintmhMhilL4WRWk6r4Hpaw==}
 
@@ -380,6 +398,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@lucide/svelte@0.510.0':
+    resolution: {integrity: sha512-1zj0aj9K+eBK0sMtDQh1HfL2Xv7EY+SemBWFMMmoVN4mZ9Swc3e5cGs20knwdgt46kZnlEI/a29tX//zpl64LA==}
+    peerDependencies:
+      svelte: ^5
 
   '@melt-ui/pp@0.3.2':
     resolution: {integrity: sha512-xKkPvaIAFinklLXcQOpwZ8YSpqAFxykjWf8Y/fSJQwsixV/0rcFs07hJ49hJjPy5vItvw5Qa0uOjzFUbXzBypQ==}
@@ -579,8 +602,15 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
+  '@thisux/sveltednd@0.0.12':
+    resolution: {integrity: sha512-9edVcakYkoCzU6pNIwmJ6Cf+9anECod26Ue/rL3Ssf5LyuLaBLXtBx4H4U8YwQCkwtMeSGFf0OsiMpPpFjvCcg==}
+    peerDependencies:
+      svelte: ^5.0.0
+
   '@thisux/sveltednd@0.0.14':
     resolution: {integrity: sha512-Vbq69SU3HUomPg6oCXtb89OG89hka0YIkdaErYibn3waK7tYE66IcQxD/Fzg8YNW3EVsXoA9kc7kW5EUBCSQGg==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@thisux/sveltednd@0.0.17':
     resolution: {integrity: sha512-lRninjw439phhA8xAHqCpMAX0hnwFMdbXW4M0XJgAdnGxeum+QsLiIC4P3HnkNXAygsVKUqxRcbS84CxDZ9hPw==}
@@ -605,6 +635,9 @@ packages:
 
   '@types/event-calendar__core@3.7.0':
     resolution: {integrity: sha512-mNyYp2PeQ+pP9msbMcDLuYhZwDZDUgQWl/pniZRaNfckPxo31x3ue10Lv7tFlHAKihgw7a2Ogw2S5PHjGm7dLA==}
+
+  '@types/event-calendar__interaction@3.4.1':
+    resolution: {integrity: sha512-C0Uxu2V4+3jWCBtSEP3aCDRZ2fHmuOvpw5FQEh6wjeEPGsRnpJZYfa63uHLdUGdmDFFYMvbJS1kaOF9w62c/GA==}
 
   '@types/event-calendar__time-grid@3.4.1':
     resolution: {integrity: sha512-c9lqBDqFuZgHJEomtdk/62BYQAE8pBh1Egc+z0EDAYrCH51aeF4N8bF1pAg98eDOKcQPYscGD2W83Z7EE3sASg==}
@@ -850,6 +883,19 @@ packages:
 
   electron-to-chromium@1.5.111:
     resolution: {integrity: sha512-vJyJlO95wQRAw6K2ZGF/8nol7AcbCOnp8S6H91mwOOBbXoS9seDBYxCTPYAFsvXLxl3lc0jLXXe9GLxC4nXVog==}
+
+  embla-carousel-reactive-utils@8.6.0:
+    resolution: {integrity: sha512-fMVUDUEx0/uIEDM0Mz3dHznDhfX+znCCDCeIophYb1QGVM7YThSWX+wz11zlYwWFOr74b4QLGg0hrGPJeG2s4A==}
+    peerDependencies:
+      embla-carousel: 8.6.0
+
+  embla-carousel-svelte@8.6.0:
+    resolution: {integrity: sha512-ZDsKk8Sdv+AUTygMYcwZjfRd1DTh+JSUzxkOo8b9iKAkYjg+39mzbY/lwHsE3jXSpKxdKWS69hPSNuzlOGtR2Q==}
+    peerDependencies:
+      svelte: ^3.49.0 || ^4.0.0 || ^5.0.0
+
+  embla-carousel@8.6.0:
+    resolution: {integrity: sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1874,6 +1920,15 @@ snapshots:
     dependencies:
       svelte: 4.2.19
 
+  '@event-calendar/core@3.12.0':
+    dependencies:
+      svelte: 4.2.19
+
+  '@event-calendar/interaction@3.12.0':
+    dependencies:
+      '@event-calendar/core': 3.12.0
+      svelte: 4.2.19
+
   '@event-calendar/time-grid@3.10.0':
     dependencies:
       '@event-calendar/core': 3.10.0
@@ -1932,6 +1987,10 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@lucide/svelte@0.510.0(svelte@5.21.0)':
+    dependencies:
+      svelte: 5.21.0
 
   '@melt-ui/pp@0.3.2(@melt-ui/svelte@0.86.3(svelte@5.21.0))(svelte@5.21.0)':
     dependencies:
@@ -2115,11 +2174,18 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@thisux/sveltednd@0.0.14': {}
+  '@thisux/sveltednd@0.0.12(svelte@5.21.0)':
+    dependencies:
+      svelte: 5.21.0
+
+  '@thisux/sveltednd@0.0.14(svelte@5.21.0)':
+    dependencies:
+      '@thisux/sveltednd': 0.0.12(svelte@5.21.0)
+      svelte: 5.21.0
 
   '@thisux/sveltednd@0.0.17(svelte@5.21.0)':
     dependencies:
-      '@thisux/sveltednd': 0.0.14
+      '@thisux/sveltednd': 0.0.14(svelte@5.21.0)
       svelte: 5.21.0
 
   '@thisux/sveltednd@0.0.18(svelte@5.21.0)':
@@ -2139,6 +2205,8 @@ snapshots:
   '@types/event-calendar__core@3.7.0':
     dependencies:
       svelte: 4.2.19
+
+  '@types/event-calendar__interaction@3.4.1': {}
 
   '@types/event-calendar__time-grid@3.4.1': {}
 
@@ -2393,6 +2461,18 @@ snapshots:
   eastasianwidth@0.2.0: {}
 
   electron-to-chromium@1.5.111: {}
+
+  embla-carousel-reactive-utils@8.6.0(embla-carousel@8.6.0):
+    dependencies:
+      embla-carousel: 8.6.0
+
+  embla-carousel-svelte@8.6.0(svelte@5.21.0):
+    dependencies:
+      embla-carousel: 8.6.0
+      embla-carousel-reactive-utils: 8.6.0(embla-carousel@8.6.0)
+      svelte: 5.21.0
+
+  embla-carousel@8.6.0: {}
 
   emoji-regex@8.0.0: {}
 

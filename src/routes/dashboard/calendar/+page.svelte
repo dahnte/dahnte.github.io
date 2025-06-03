@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { plugins, options } from '$lib/components/calendar.svelte';
+    import { plugins, options, eventList } from '$lib/components/calendar.svelte';
     import { Button } from "$lib/components/ui/button/index.js";
     import * as Drawer from "$lib/components/ui/drawer/index.js";
     import Calendar from '@event-calendar/core';
@@ -45,44 +45,44 @@
 	const items = $state<Item[]>([
 		{
 			id: '1',
-			title: 'Demo meeting',
-			description: 'Showcase latest changes to demo',
+			title: 'Database integration',
+			description: 'Backend workload',
 			priority: 'high'
 		},
         {
 			id: '5',
-			title: '1:1 meeting',
-			description: 'Discuss what needs to be worked on the demo',
+			title: 'Develop UI/UX',
+			description: 'Frontend workload',
 			priority: 'high'
 		},
 		{
 			id: '2',
-			title: 'Build demo',
-			description: 'Work on required tasks for the demo',
+			title: 'UI/UX Survey and Develop Wireframe',
+			description: 'Review feedback given from user testing',
 			priority: 'medium'
 		},
 		{
 			id: '3',
-			title: 'Frontend research',
-			description: 'Look into frontend standards',
+			title: 'Frontend/backend research',
+			description: 'Look into best practices for security and performance',
 			priority: 'low'
 		},
         {
 			id: '4',
-			title: 'Check email',
-			description: 'Respond to urgent emails',
+			title: 'API integration research',
+			description: 'Look into cost effective/practical integrations',
 			priority: 'low'
 		}
 
 	]);
-    const items2 = $state<Item[]>([
-        {
-            id: '5',
-            title: 'Blank',
-            description: 'Try',
-            priority: 'low'
-        }
-	]);
+    // const items2 = $state<Item[]>([
+    //     {
+    //         id: '5',
+    //         title: 'Blank',
+    //         description: 'Try',
+    //         priority: 'low'
+    //     }
+	// ]);
 
 	function handleDrop(state: DragDropState<Item>) {
 		const { draggedItem, targetContainer } = state;
@@ -92,6 +92,32 @@
 		if (dragIndex !== -1 && !isNaN(dropIndex)) {
 			const [item] = items.splice(dragIndex, 1);
 			items.splice(dropIndex, 0, item);
+		}
+	}
+
+	function handleDropTask() {
+		console.log("TEST DROP!");
+
+		if(tracker == 0) {
+			eventList.push({id: 1, start: '2025-4-17 6:30', end: '2025-4-17 7:30', display: 'auto', title: 'API integration research', editable: true, backgroundColor: '#7fb8d5'});
+			options.events = eventList;
+			tracker = 1;
+		} else if (tracker == 1) {
+			eventList.push({id: 2, start: '2025-4-17 10:00', end: '2025-4-17 13:00', display: 'auto', title: 'Database integration', editable: true, backgroundColor: 'rgb(230, 110, 127)'});
+			options.events = eventList;
+			tracker = 2;
+		} else if (tracker == 2) {
+			eventList.push({id: 1, start: '2025-4-18 6:30', end: '2025-4-18 7:30', display: 'auto', title: 'UI/UX Survey and Develop Wireframe', editable: true, backgroundColor: '#e1a83a'});
+			options.events = eventList;
+			tracker = 3;
+		} else if (tracker == 3) {
+			eventList.push({id: 2, start: '2025-4-18 12:00', end: '2025-4-18 14:00', display: 'auto', title: 'Develop UI/UX', editable: true, backgroundColor: 'rgb(230, 110, 127)'});
+			options.events = eventList;
+			tracker = 4;
+		} else if (tracker == 4) {
+			eventList.push({id: 2, start: '2025-4-18 10:00', end: '2025-4-18 11:00', display: 'auto', title: 'Frontend/Backend research', editable: true, backgroundColor: '#7fb8d5'});
+			options.events = eventList;
+			tracker = 5;
 		}
 	}
 
@@ -167,7 +193,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-10 h-[30rem] w-full overflow-auto">
+                <div class="px-10 h-[37rem] w-full overflow-auto" 
+				use:droppable={{ container: 'tester', callbacks: { onDrop: handleDropTask }}}>
                     <Calendar {plugins} {options} />
                 </div>
             </div>
@@ -193,7 +220,7 @@
         </Drawer.Footer>
     </Drawer.Content>
 </Drawer.Root>
-<div class="p-10 h-full">
+<div class="p-10 h-dvh">
     <Calendar {plugins} {options} />
 </div>
 

@@ -11,6 +11,7 @@
 	import SquareTerminal from "lucide-svelte/icons/square-terminal";
 	import CalendarDays from "lucide-svelte/icons/calendar-days";
 	import ListTodo from  "lucide-svelte/icons/list-todo";
+	import Blocks from "lucide-svelte/icons/blocks";
 	import { base } from '$app/paths';
 	
 	// This is sample data.
@@ -51,7 +52,7 @@
 		{
 			title: "Build Your Own Schedule",
 			url: base + "/dashboard/tasklist",
-			icon: ListTodo,
+			icon: Blocks,
 		},
 		{
 			title: "Settings",
