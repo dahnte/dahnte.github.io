@@ -10,6 +10,7 @@
 	let breadcrumbList = $state(page.url.pathname.split('/').filter(Boolean));
 	console.log(breadcrumbList);
 </script>
+
 <Sidebar.Provider>
 	<AppSidebar />
 	<Sidebar.Inset>
