@@ -13,8 +13,8 @@
 	import ListTodo from  "lucide-svelte/icons/list-todo";
 	import Blocks from "lucide-svelte/icons/blocks";
 	import { base } from "$app/paths";
-	import evenLogo from "$lib/evenLogo.png";
-	
+	const evenLogo = base+'/evenLogo.png';
+
 	// This is sample data.
 	const data = {
 		user: {
