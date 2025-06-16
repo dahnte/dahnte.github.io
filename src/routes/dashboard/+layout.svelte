@@ -20,7 +20,7 @@
 			<Breadcrumb.Root> 
 				<Breadcrumb.List>
 					<Breadcrumb.Item>
-						<Breadcrumb.Link href="dashboard">Dashboard</Breadcrumb.Link>
+						<Breadcrumb.Link href={base+'/dashboard'}>Dashboard</Breadcrumb.Link>
 					</Breadcrumb.Item>
 					<!-- {#each breadcrumbList as item, index}
 						{#if breadcrumbList.length - 1 == index}
