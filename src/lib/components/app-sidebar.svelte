@@ -12,7 +12,8 @@
 	import CalendarDays from "lucide-svelte/icons/calendar-days";
 	import ListTodo from  "lucide-svelte/icons/list-todo";
 	import Blocks from "lucide-svelte/icons/blocks";
-	import { base } from '$app/paths';
+	import { base } from "$app/paths";
+	import evenLogo from "$lib/evenLogo.png";
 	
 	// This is sample data.
 	const data = {
@@ -24,7 +25,7 @@
 		teams: [
 		{
 			name: "Evenworks",
-			logo: Command,
+			logo: evenLogo,
 			plan: "Free",
 		},
 		],
@@ -83,16 +84,32 @@
 			],
 		},
 		],
+		// navNotif: [
+		// 	{
+		// 		url: base + "/dashboard/calendar",
+		// 		item: "Your meeting has been rescheduled for Monday at 8:30 AM",
+		// 	},
+		// 	{
+		// 		url: base + "/dashboard/tasklist",
+		// 		item: "You have pending tasks that need to be reviewed",
+		// 	},
+		// ],
 		navNotif: [
 			{
-				url: base + "/dashboard/calendar",
-				item: "Your meeting has been rescheduled for Monday at 8:30 AM",
+				title: "Notifications",
+				icon: Settings2,
+				items: [
+					{
+						message: "Your meeting has been rescheduled for Monday at 8:30 AM",
+						url: "#",
+					},
+					{
+						message: "You have pending tasks that need to be reviewed",
+						url: "#",
+					},
+				],
 			},
-			{
-				url: base + "/dashboard/tasklist",
-				item: "You have pending tasks that need to be reviewed",
-			},
-		],
+		]
 	};
 </script>
 

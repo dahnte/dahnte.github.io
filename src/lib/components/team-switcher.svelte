@@ -26,7 +26,8 @@
 						<div
 							class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
 						>
-							<activeTeam.logo class="size-4" />
+							<!-- <activeTeam.logo class="size-4" /> -->
+							<img src={activeTeam.logo} alt="Even's logo" class="size-7" />
 						</div>
 						<div class="grid flex-1 text-left text-sm leading-tight">
 							<span class="truncate font-semibold">

@@ -16,10 +16,13 @@
 	<Sidebar.Inset>
 		<div class="flex items-center gap-2 px-4">
 			<Sidebar.Trigger class="-ml-1" />
-			<!--- Separator orientation="vertical" class="mr-2 h-4" />
+			<Separator orientation="vertical" class="mr-2 h-4" />
 			<Breadcrumb.Root> 
 				<Breadcrumb.List>
-					{#each breadcrumbList as item, index}
+					<Breadcrumb.Item>
+						<Breadcrumb.Link href="/dashboard">Dashboard</Breadcrumb.Link>
+					</Breadcrumb.Item>
+					<!-- {#each breadcrumbList as item, index}
 						{#if breadcrumbList.length - 1 == index}
 							<Breadcrumb.Item>
 								<Breadcrumb.Link href="{base}/{item}">{item}</Breadcrumb.Link>
@@ -30,9 +33,9 @@
 							</Breadcrumb.Item>
 							<Breadcrumb.Separator class="hidden md:block" />
 						{/if}
-					{/each}
+					{/each} -->
 				</Breadcrumb.List>
-			</Breadcrumb.Root --->
+			</Breadcrumb.Root>
 		</div>
 		{@render children()}
 	</Sidebar.Inset>

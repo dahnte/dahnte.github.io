@@ -4,17 +4,17 @@
     import Interaction from '@event-calendar/interaction';
     
     export var eventList = [
-        {id: 1, start: '2025-4-14 8:00', end: '2025-4-14 9:00', display: 'auto', title: 'Team meeting', editable: true},
-        {id: 1, start: '2025-4-14 6:30', end: '2025-4-14 7:30', display: 'auto', title: 'UI/UX Survey and Develop Wireframe', editable: true, backgroundColor: '#e1a83a'},
-        {id: 1, start: '2025-4-14 10:00', end: '2025-4-14 12:00', display: 'auto', title: 'Frontend/Backend research', editable: true, backgroundColor: '#7fb8d5'},
-        {id: 1, start: '2025-4-14 13:00', end: '2025-4-14 14:30', display: 'auto', title: '1:1 meeting w/ Vanessa', editable: true, backgroundColor: 'purple'},
-        {id: 2, start: '2025-4-15 8:00', end: '2025-4-15 9:00', display: 'auto', title: 'Team meeting', editable: true},
-        {id: 2, start: '2025-4-15 10:00', end: '2025-4-15 13:00', display: 'auto', title: 'Develop UI/UX', editable: true, backgroundColor: 'rgb(230, 110, 127)'},
-        {id: 3, start: '2025-4-16 10:00', end: '2025-4-16 12:00', display: 'auto', title: 'UI/UX Survey and Develop Wireframe', editable: true, backgroundColor: '#e1a83a'},
-        {id: 3, start: '2025-4-16 7:30', end: '2025-4-16 9:00', display: 'auto', title: '1:1 meeting w/ Brooklyn', editable: true, backgroundColor: 'purple'},
-        {id: 3, start: '2025-4-16 13:00', end: '2025-4-16 14:00', display: 'auto', title: 'User Support Meeting', editable: true},
-        {id: 4, start: '2025-4-17 8:00', end: '2025-4-17 9:00', display: 'auto', title: 'Team meeting', editable: true},
-        {id: 5, start: '2025-4-18 8:00', end: '2025-4-18 9:00', display: 'auto', title: 'Team meeting', editable: true},
+        {id: 1, start: '2025-6-16 8:00', end: '2025-6-16 9:00', display: 'auto', title: 'Team meeting', editable: true},
+        {id: 1, start: '2025-6-16 6:30', end: '2025-6-16 7:30', display: 'auto', title: 'UI/UX Survey and Develop Wireframe', editable: true, backgroundColor: '#e1a83a'},
+        {id: 1, start: '2025-6-16 10:00', end: '2025-6-16 12:00', display: 'auto', title: 'Frontend/Backend research', editable: true, backgroundColor: '#7fb8d5'},
+        {id: 1, start: '2025-6-16 13:00', end: '2025-6-16 14:30', display: 'auto', title: '1:1 meeting w/ Vanessa', editable: true, backgroundColor: 'purple'},
+        {id: 2, start: '2025-6-17 8:00', end: '2025-6-17 9:00', display: 'auto', title: 'Team meeting', editable: true},
+        {id: 2, start: '2025-6-17 10:00', end: '2025-6-17 13:00', display: 'auto', title: 'Develop UI/UX', editable: true, backgroundColor: 'rgb(230, 110, 127)'},
+        {id: 3, start: '2025-6-18 10:00', end: '2025-6-18 12:00', display: 'auto', title: 'UI/UX Survey and Develop Wireframe', editable: true, backgroundColor: '#e1a83a'},
+        {id: 3, start: '2025-6-18 7:30', end: '2025-6-18 9:00', display: 'auto', title: '1:1 meeting w/ Brooklyn', editable: true, backgroundColor: 'purple'},
+        {id: 3, start: '2025-6-18 13:00', end: '2025-6-18 14:00', display: 'auto', title: 'User Support Meeting', editable: true},
+        {id: 4, start: '2025-6-19 8:00', end: '2025-6-19 9:00', display: 'auto', title: 'Team meeting', editable: true},
+        {id: 5, start: '2025-6-20 8:00', end: '2025-6-20 9:00', display: 'auto', title: 'Team meeting', editable: true},
     ]
     
     export let plugins = [Interaction, TimeGrid];
